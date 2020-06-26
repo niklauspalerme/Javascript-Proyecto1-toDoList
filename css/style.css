@@ -1,0 +1,15 @@
+.container {
+  margin-top: 20px;
+}
+
+.title {
+  display: grid;
+  justify-content: center;
+}
+
+.nico {
+  float: right;
+  cursor: pointer;
+  color: red;
+  font-weight: bold;
+}
