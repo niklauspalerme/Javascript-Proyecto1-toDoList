@@ -37,12 +37,25 @@ function addingNote(e) {
   if (nota === "") {
     console.log("No hay valor en la nota");
   } else {
-    let listaVisible = document.createElement("li");
-    listaVisible.innerText = nota;
-    let icon = document.createElement("i");
-    icon.className = "fas fa-times-circle nico";
-    listaVisible.appendChild(icon);
-    listaToDo.appendChild(listaVisible);
+    let jumbotron = document.createElement("div");
+    jumbotron.className = "jumbotron";
+
+    let nuevaNota = document.createElement("p");
+    nuevaNota.className = "lead";
+    nuevaNota.innerText = nota;
+
+    let espacio = document.createElement("hr");
+    espacio.className = "my-4";
+
+    let button = document.createElement("a");
+    button.innerText = "Delete";
+    button.className = "btn btn-outline-danger nico";
+
+    jumbotron.appendChild(nuevaNota);
+    jumbotron.appendChild(espacio);
+    jumbotron.appendChild(button);
+
+    listaToDo.appendChild(jumbotron);
 
     //Agregamos al Storage la nota
     addingNoteStorage(nota);
@@ -96,18 +109,31 @@ function clearContents(event) {
   event.value = "";
 }
 
-//5-Mostrar la data y Persistencia
+//5-Mostrar la data y Persistencia en el front-end
 function showLocalStorageNotes() {
   //Obtengo lo que hay en el LocalStorage
   let arrayNotas = getLocalStorageList();
 
   arrayNotas.forEach((nota) => {
-    let listaVisible = document.createElement("li");
-    listaVisible.innerText = nota;
-    let icon = document.createElement("i");
-    icon.className = "fas fa-times-circle nico";
-    listaVisible.appendChild(icon);
-    listaToDo.appendChild(listaVisible);
+    let jumbotron = document.createElement("div");
+    jumbotron.className = "jumbotron";
+
+    let nuevaNota = document.createElement("p");
+    nuevaNota.className = "lead";
+    nuevaNota.innerText = nota;
+
+    let espacio = document.createElement("hr");
+    espacio.className = "my-4";
+
+    let button = document.createElement("a");
+    button.innerText = "Delete";
+    button.className = "btn btn-outline-danger nico";
+
+    jumbotron.appendChild(nuevaNota);
+    jumbotron.appendChild(espacio);
+    jumbotron.appendChild(button);
+
+    listaToDo.appendChild(jumbotron);
   });
 
   //Cargamos la fecha en pantalla
@@ -134,11 +160,12 @@ function clearAllList() {
 }
 
 //8- Eliminar una nota
-
 function deleteNote(e) {
-  if (e.target.classList[3] === "nico") {
+  if (e.target.classList[2] === "nico") {
+    let notaBorrar =
+      e.target.previousElementSibling.previousElementSibling.innerText;
     e.target.parentElement.remove();
-    deleteNoteLocalStorage(e.target.parentElement.innerText);
+    deleteNoteLocalStorage(notaBorrar);
   }
 }
 
@@ -146,11 +173,17 @@ function deleteNote(e) {
 function deleteNoteLocalStorage(nota) {
   //Obtenemos lo que esta en memoria en forma de array
   let notas = getLocalStorageList();
+
+  console.log(notas);
+
   notas.forEach(function (notax, index) {
     if (notax == nota)
       //Si coincide la nota con el array, la elimina
       notas.splice(index, 1);
   });
+
+  console.log(notas);
+
   //Agregamos el array transformado en string a localStorage
   localStorage.setItem("notas", JSON.stringify(notas));
 }

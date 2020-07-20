@@ -8,8 +8,11 @@
 }
 
 .nico {
-  float: right;
   cursor: pointer;
   color: red;
   font-weight: bold;
+}
+
+div .jumbotron {
+  padding: 2rem 1rem;
 }
